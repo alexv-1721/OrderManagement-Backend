@@ -50,5 +50,21 @@ namespace OrderManagement.API.Controllers
             }
             return Unauthorized();
         }
+        [Authorize]
+        [HttpPost("CancelCart")]
+        public async Task<IActionResult> CancelCart(CartModel cart)
+        {
+            var uid = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (int.TryParse(uid, out int userId))
+            {
+                var res = await _cartService.CancelCart(cart, userId);
+                if (res.Success)
+                {
+                    return Ok(res);
+                }
+                return BadRequest(res);
+            }
+            return Unauthorized();
+        }
     }
 }

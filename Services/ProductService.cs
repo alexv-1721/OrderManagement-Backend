@@ -1,3 +1,4 @@
+using System.Drawing.Printing;
 using OrderManagement.API.Model;
 using OrderManagement.API.Repositories;
 using OrderManagement.API.Utills;
@@ -11,11 +12,11 @@ namespace OrderManagement.API.Services
         {
         _productRepository = productRepository;
         }
-        public async Task<ApiResponse<List<ProductModel>>> GetProducts(int userid)
+        public async Task<ApiResponse<List<ProductModel>>> GetProducts(int userid,int page, int pageSize)
         {
             try
             {
-                var res = await _productRepository.GetProductsFromDB(userid);
+                var res = await _productRepository.GetProductsFromDB(userid, page, pageSize);
                 return new ApiResponse<List<ProductModel>> { Data = res, Success = true, Message = "Success" };
             }
             catch
@@ -24,16 +25,17 @@ namespace OrderManagement.API.Services
             }
         }
 
-        public async Task<ApiResponse<List<ProductModel>>> GetProduct(int proId)
+        public async Task<ApiResponse<ProductModel>> GetProduct(string proId)
         {
             try
             {
-                var res = await _productRepository.GetProductsFromDB(proId);
-                return new ApiResponse<List<ProductModel>> { Data = res, Success = true, Message = "Success" };
+                var res = await _productRepository.GetProductFromDB(proId);
+                if (res == null) return new ApiResponse<ProductModel> { Success = false, Message = "Product not found" };
+                return new ApiResponse<ProductModel> { Data = res, Success = true, Message = "Success" };
             }
             catch
             {
-                return new ApiResponse<List<ProductModel>> { Success = false, Message = "Database Error" };
+                return new ApiResponse<ProductModel> { Success = false, Message = "Database Error" };
             }
         }
     }

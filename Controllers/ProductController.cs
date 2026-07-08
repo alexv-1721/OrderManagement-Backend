@@ -1,36 +1,23 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
+using OrderManagement.API.DataContext;
 using OrderManagement.API.Model;
-using OrderManagement.API.Services;
 
-namespace OrderManagement.API.Controllers
+
+[Authorize]
+public class ProductController : ODataController
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductController : ControllerBase
+    private readonly AppDBContext _context;
+    
+    public ProductController(AppDBContext context)
     {
-        private readonly ProductService _productService;
-        public ProductController(ProductService productService) 
-        {
-            _productService = productService;
-        }
+        _context = context;
+    }
 
-        [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> GetProducts()
-        {
-            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (int.TryParse(id, out int userId))
-            {
-                var res = await _productService.GetProducts(userId);
-                if (res.Success)
-                {
-                    return Ok(res);
-                }
-                return BadRequest(res);
-            }
-            return Unauthorized();
-        }
+    [EnableQuery]
+    public IQueryable<ProductModel> Get()
+    {
+        return _context.Products;
     }
 }

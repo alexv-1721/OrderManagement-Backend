@@ -1,6 +1,7 @@
 using OrderManagement.API.Model;
 using OrderManagement.API.Repositories;
 using OrderManagement.API.Utills;
+using OrderManagement.API.DTOs;
 
 namespace OrderManagement.API.Services
 {
@@ -22,7 +23,7 @@ namespace OrderManagement.API.Services
             try
             {
                 // Fetch product to calculate total price
-                var products = await _productRepository.GetProductsFromDB(userId);
+                var products = await _productRepository.GetProductsFromDB(userId,-1,-1);
                 var product = products.FirstOrDefault(p => p.Id == productId);
 
                 if (product == null)
@@ -36,11 +37,18 @@ namespace OrderManagement.API.Services
                 var order = new OrderModel
                 {
                     UserId = userId,
-                    ProductId = productId,
-                    Quantity = quantity,
                     TotalPrice = price * quantity,
                     Status = "Placed",
-                    OrderDate = DateTime.UtcNow
+                    OrderDate = DateTime.UtcNow,
+                    Items = new[] 
+                    { 
+                        new OrderItemModel 
+                        { 
+                            ProductId = productId, 
+                            Quantity = quantity, 
+                            Price = price 
+                        } 
+                    }
                 };
 
                 var createdOrder = await _orderRepository.CreateOrder(order);
@@ -53,16 +61,77 @@ namespace OrderManagement.API.Services
             }
         }
 
-        public async Task<ApiResponse<List<OrderModel>>> GetOrders(int userId)
+        public async Task<ApiResponse<List<OrderDTO>>> GetOrders(int userId)
         {
             try
             {
                 var orders = await _orderRepository.GetOrdersByUser(userId);
-                return new ApiResponse<List<OrderModel>> { Success = true, Data = orders, Message = "Orders retrieved successfully" };
+                return new ApiResponse<List<OrderDTO>> { Success = true, Data = orders, Message = "Orders retrieved successfully" };
             }
             catch (Exception ex)
             {
-                return new ApiResponse<List<OrderModel>> { Success = false, Message = "Failed to retrieve orders: " + ex.Message };
+                return new ApiResponse<List<OrderDTO>> { Success = false, Message = "Failed to retrieve orders: " + ex.Message };
+            }
+        }
+
+        public async Task<ApiResponse<List<OrderModel>>> CheckoutCart(int userId)
+        {
+            try
+            {
+                var cartItems = await _cartRepository.GetCartsFromDB(userId);
+                if (cartItems == null || !cartItems.Any())
+                {
+                    return new ApiResponse<List<OrderModel>> { Success = false, Message = "Cart is empty" };
+                }
+
+                decimal grandTotal = 0;
+                var orderItems = new List<OrderItemModel>();
+
+                foreach (var item in cartItems)
+                {
+                    if (!decimal.TryParse(item.Price, out decimal price))
+                    {
+                        price = 0;
+                    }
+                    
+                    orderItems.Add(new OrderItemModel
+                    {
+                        ProductId = item.Id,
+                        Quantity = item.Quantity,
+                        Price = price
+                    });
+                    
+                    grandTotal += price * item.Quantity;
+                }
+
+                var order = new OrderModel
+                {
+                    UserId = userId,
+                    TotalPrice = grandTotal,
+                    Status = "Placed",
+                    OrderDate = DateTime.UtcNow,
+                    Items = orderItems.ToArray()
+                };
+
+                var createdOrder = await _orderRepository.CreateOrder(order);
+
+                // Clear cart completely after successful order
+                var user = await _cartRepository.CancelCartFromDB(new CartModel { ProductId = cartItems.First().Id, Quantity = 0 }, userId);
+                if (user != null) {
+                    user.Cart = Array.Empty<CartModel>();
+                }
+                // It is better to create a ClearCart in CartRepo, but we can do it here by injecting DbContext if needed, 
+                // wait, the easiest way is to use existing cartItems to remove all:
+                foreach(var item in cartItems) 
+                {
+                    await _cartRepository.RemoveCartFromDB(new CartModel { ProductId = item.Id, Quantity = item.Quantity }, userId);
+                }
+
+                return new ApiResponse<List<OrderModel>> { Success = true, Data = new List<OrderModel> { createdOrder }, Message = "Checkout successful" };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<List<OrderModel>> { Success = false, Message = "Failed to checkout: " + ex.Message };
             }
         }
 

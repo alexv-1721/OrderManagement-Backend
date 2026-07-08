@@ -9,6 +9,8 @@ namespace OrderManagement.API.DataContext
         public DbSet<UserModel> Users { get; set; }
         public DbSet<ProductModel> Products { get; set; }
         public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<CartModel > Carts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +25,12 @@ namespace OrderManagement.API.DataContext
                 .HasConversion(
                     v => System.Text.Json.JsonSerializer.Serialize(v, (System.Text.Json.JsonSerializerOptions?)null),
                     v => System.Text.Json.JsonSerializer.Deserialize<int[]>(v, (System.Text.Json.JsonSerializerOptions?)null));
+
+            modelBuilder.Entity<OrderModel>()
+                .Property(e => e.Items)
+                .HasConversion(
+                    v => System.Text.Json.JsonSerializer.Serialize(v, (System.Text.Json.JsonSerializerOptions?)null),
+                    v => System.Text.Json.JsonSerializer.Deserialize<OrderItemModel[]>(v, (System.Text.Json.JsonSerializerOptions?)null));
             
             base.OnModelCreating(modelBuilder);
         }

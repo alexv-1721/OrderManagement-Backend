@@ -1,14 +1,16 @@
-using System;
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 using OrderManagement.API.DataContext;
+using OrderManagement.API.Model;
 using OrderManagement.API.Repositories;
 using OrderManagement.API.Services;
 using ProductAPI.Middleware;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
@@ -20,7 +22,6 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader());
 });
 
-builder.Services.AddControllers();
 //builder.Services.AddDbContext<AppDBContext>(options =>
 //{
 //    options.UseSqlServer(
@@ -35,6 +36,7 @@ builder.Services.AddDbContext<AppDBContext>(options =>
         ServerVersion.AutoDetect(connectionString)
     );
 });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<UserService>();
@@ -46,6 +48,27 @@ builder.Services.AddScoped<CartRepository>();
 builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddControllers()
+.AddOData(options =>
+{
+    options
+        .Select()
+        .Filter()
+        .OrderBy()
+        .Count()
+        .Expand()
+        .SetMaxTop(100)
+        .AddRouteComponents("odata", GetEdmModel());
+});
+
+static IEdmModel GetEdmModel()
+{
+    var modelBuilder = new ODataConventionModelBuilder();
+
+    modelBuilder.EntitySet<ProductModel>("Product");
+
+    return modelBuilder.GetEdmModel();
+}
 var key = builder.Configuration["Jwt:Key"];
 builder.Services.AddAuthentication("Bearer").AddJwtBearer
 ("Bearer", options =>
@@ -119,7 +142,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseStaticFiles();
 app.MapControllers();
 
 app.Run();

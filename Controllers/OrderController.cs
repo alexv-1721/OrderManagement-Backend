@@ -66,11 +66,24 @@ namespace OrderManagement.API.Controllers
             }
             return Unauthorized();
         }
+
+        [Authorize]
+        [HttpPost("checkout")]
+        public async Task<IActionResult> CheckoutCart()
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (int.TryParse(id, out int userId))
+            {
+                var res = await _orderService.CheckoutCart(userId);
+                if (res.Success)
+                {
+                    return Ok(res);
+                }
+                return BadRequest(res);
+            }
+            return Unauthorized();
+        }
     }
 
-    public class OrderRequest
-    {
-        public string ProductId { get; set; } = string.Empty;
-        public int Quantity { get; set; }
-    }
+
 }

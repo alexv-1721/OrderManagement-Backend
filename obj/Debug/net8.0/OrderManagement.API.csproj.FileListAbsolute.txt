@@ -1,5 +1,6 @@
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\appsettings.Development.json
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\appsettings.json
+C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\OrderManagement.API.staticwebassets.runtime.json
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\OrderManagement.API.staticwebassets.endpoints.json
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\OrderManagement.API.exe
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\OrderManagement.API.deps.json
@@ -12,6 +13,7 @@ C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\ne
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\EntityFramework.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Humanizer.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.AspNetCore.OData.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -38,7 +40,11 @@ C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\ne
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.OData.Core.dll
+C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.OData.Edm.dll
+C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.OData.ModelBuilder.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.Spatial.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\bin\Debug\net8.0\Mono.TextTemplating.dll
@@ -140,6 +146,7 @@ C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\ne
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\OrderManagement.API.csproj.CoreCompileInputs.cache
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\OrderManagement.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\OrderManagement.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\OrderManagement.API.sourcelink.json
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
@@ -148,10 +155,10 @@ C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\ne
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\staticwebassets.development.json
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\swae.build.ex.cache
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\OrderMan.AC52080A.Up2Date
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\OrderManagement.API.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\refint\OrderManagement.API.dll
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\OrderManagement.API.pdb
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\OrderManagement.API.genruntimeconfig.cache
 C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\ref\OrderManagement.API.dll
-C:\Order Management\BackEnd\OrderManagement.API\OrderManagement.API\obj\Debug\net8.0\swae.build.ex.cache
